@@ -1,0 +1,32 @@
+General notes and thoughts
+--------------------------
+
+1. Doesn't manage or handle user authentication; if you say you are "John", you are assumed to be "John". :-)
+
+2. Doesn't manage user creation and because the input for each request required a "name", I decided to simply use the "name" as a unique key in the database. The user model still has an primary key (id) which is auto-incremented and used for references. Also, whenever a user's name is requested, if a user does not exist by that name, I create one.
+
+3. The service uses an in-memory database to allow for easy testing and development, in practice, I would swap out the in-memory database configuration with Postgres or some other relational DB in production. 
+
+4. For speed, I ignored the detailed handling of some components of the service. For example: DateTime. My general goal is to store all time in UTC and then convert DateTime fields into a user's local timezone somewhere before the user view.
+
+5. Play Framework supports a monad structure called "Promises". Personally, I like they way Play uses them to allow developers to compose async tasks. However, for this project, I used the non-async structure.
+
+6. I made some modifications to the routes provided in the test html document.
+
+GET     /qa/:id             
+POST    /qa                 
+GET     /qa/:id/questions   
+POST    /qa/:id/question    
+POST    /question/:id/answer
+
+7. I'm not sure I like the way I implemented filtering for the "list questions" route, but the query string seemed like a reasonable place to put the filter.
+
+8. Play Framework uses evolutions to upgrade a database through a series of changes. I think there are better tools available.
+
+9. I did not use any caching in the service; however, because many users will probably frequently request the same information, I believe a caching layer would be approiate.
+
+10. I chose to lump the answer information in with its question because of the one-to-one relationship of question and answer. It should save on number of queries.
+
+11. Play Framework integrates well with the ORM, Ebean. Ebean uses lazy loading of objects referenced through relationships. The way this works can lead to TONS of additional queries when a single join query would suffice. There are ways aroudn this and after doing some query profiling, I'd imagine the value would become obvious.
+
+12. I chose a relational database for the datastore for this service. Depending on load, query expectations, etc, trading referencial integrity for a NoSQL datastore could make sense.
