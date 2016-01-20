@@ -23,10 +23,10 @@ POST    /question/:id/answer
 
 8. Play Framework uses evolutions to upgrade a database through a series of changes. I think there are better tools available.
 
-9. I did not use any caching in the service; however, because many users will probably frequently request the same information, I believe a caching layer would be approiate.
+9. I did not use any caching in the service; however, because many users will probably frequently request the same information, I believe a caching layer would be appropriate.
 
 10. I chose to lump the answer information in with its question because of the one-to-one relationship of question and answer. It should save on number of queries.
 
-11. Play Framework integrates well with the ORM, Ebean. Ebean uses lazy loading of objects referenced through relationships. The way this works can lead to TONS of additional queries when a single join query would suffice. There are ways aroudn this and after doing some query profiling, I'd imagine the value would become obvious.
+11. Play Framework integrates well with the ORM, Ebean. Ebean uses lazy loading of objects referenced through relationships. The way this works can lead to TONS of additional queries when a single join query would suffice. There are ways around this and after doing some query profiling, I'd imagine the value would become obvious.
 
-12. I chose a relational database for the datastore for this service. Depending on load, query expectations, etc, trading referencial integrity for a NoSQL datastore could make sense.
+12. I chose a relational database for the datastore for this service. Depending on load, query expectations, etc, trading referential integrity for a NoSQL datastore could make sense.
