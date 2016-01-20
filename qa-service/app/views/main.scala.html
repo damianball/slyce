@@ -157,7 +157,7 @@
                     <input name="question_id" placeholder="question_id">
                     <input name="text" placeholder="text">
                     <input name="image_url" placeholder="image_url">
-                    <input name="answered_by" placeholder="answered_by_name">
+                    <input name="answered_by_name" placeholder="answered_by_name">
                     <button id="answer-question" type="submit" class="btn btn-primary">POST</button>
                 </fieldset>
                 <div class="inline-block status hidden"></div>
@@ -169,7 +169,9 @@
             <form id="getQuestions">
                 <fieldset class="inline-block">
                     <legend>5. Get Questions</legend>
-                    <input name="qa_id" placeholder="qa_id">
+                    <input name="qa_id" placeholder="qa_id"><br>
+                    Show Answered Questions: <input type="radio" name="answered" value="1" checked="checked"> Yes<input type="radio" name="answered" value="0"> No<br>
+                    Show Non-Answered Questions: <input type="radio" name="non_answered" value="1" checked="checked"> Yes<input type="radio" name="non_answered" value="0"> No<br>
                     <button id="get-questions" type="submit" class="btn btn-primary">GET</button>
                 </fieldset>
                 <div class="inline-block status hidden"></div>
@@ -297,7 +299,7 @@
           $body.on('submit', '#askQuestion', function(evt) {
               evt.preventDefault();
               var qa_id = $(this).find('input[name="qa_id"]').val(),
-                      path = '/question/'+qa_id,
+                      path = '/qa/'+qa_id+'/question',
                       method = 'POST',
                       params = $(this).serializeArray();
 
@@ -308,7 +310,7 @@
           $body.on('submit', '#answerQuestion', function(evt) {
               evt.preventDefault();
               var question_id = $(this).find('input[name="question_id"]').val(),
-                      path = '/answer/'+question_id,
+                      path = '/question/'+question_id+'/answer',
                       method = 'POST',
                       params = $(this).serializeArray();
 
@@ -318,8 +320,10 @@
           // 5. Get Questions
           $body.on('submit', '#getQuestions', function(evt) {
               evt.preventDefault();
+              var answered = $(this).find('input[name="answered"]:checked').val();
+              var non_answered = $(this).find('input[name="non_answered"]:checked').val();
               var qa_id = $(this).find('input[name="qa_id"]').val(),
-                      path = '/qa/'+qa_id+'/questions',
+                      path = '/qa/'+qa_id+'/questions?non_answered='+non_answered+'&answered='+answered,
                       method = 'GET';
 
               req.call(this, path, method).done(handleSuccess).fail(handleError);

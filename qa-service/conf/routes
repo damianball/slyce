@@ -2,8 +2,15 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# slyce provided endpoint tester (html) to deal with CORS restrictions, test can be accessed by navigating to http://localhost:9000/
 GET     /                           controllers.Application.index()
+
+# routes for service
+GET     /qa/:id                     controllers.QASession_controller.view(id: Long)
+POST    /qa                         controllers.QASession_controller.create()
+GET     /qa/:id/questions           controllers.Question_controller.list(id: Long)
+POST    /qa/:id/question            controllers.Question_controller.ask(id: Long)
+POST    /question/:id/answer        controllers.Question_controller.answer(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
