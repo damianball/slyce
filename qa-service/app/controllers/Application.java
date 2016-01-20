@@ -8,7 +8,7 @@ import views.html.*;
 public class Application extends Controller {
 
     public Result index() {
-        return ok("Service is running");
+        return ok(index.render());
     }
 
 }

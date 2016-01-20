@@ -1,4 +1,8 @@
-This is your new Play application
-=================================
+Question/Answer Service
+=======================
 
-This file will be packaged with your application, when using `activator dist`.
+To run, type `activator run` from the root of the project and navigate to http://localhost:9000
+
+Note: If you do not have activator installed, you can use the activator script provided in the root of the project `./activator run`
+
+This project was created using Play Framework, see: https://playframework.com/
